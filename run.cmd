@@ -1,1 +1,0 @@
-cscript showcerts.vbs

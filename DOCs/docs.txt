@@ -11,3 +11,11 @@ https://cryptopro.ru/sites/default/files/products/cades/demopage/cades_bes_sampl
 Проверка неквалифицированной электронной подписи и сертификата
 https://e-trust.gosuslugi.ru/#/portal/sig-check-unep
 
+КриптоПро ЭЦП Browser plug-in
+https://cpdn.cryptopro.ru/default.php?url=/content/cades/plugin.html
+
+Проверка электронной подписи формата CMS/CAdES
+https://www.cryptopro.ru/sites/default/files/products/cades/demopage/verify.html
+
+ЭЦП в браузере – попробуйте прямо сейчас!
+https://cpdn.cryptopro.ru/default.php?url=/content/cades/plugin.html
