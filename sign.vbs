@@ -10,7 +10,6 @@ Const CADESCOM_STRING_TO_UCS2LE = 0
 
 WScript.Echo "Инициализация..."
 
-Dim sTSAAddress : sTSAAddress = "http://domain/tsp/tsp.srf"
 Dim oSigner : Set oSigner = CreateObject("CAdESCOM.CPSigner")
 
 On Error Resume Next
@@ -20,8 +19,6 @@ If Err.Number <> 0 Then
     WScript.Quit 1
 End If
 On Error Goto 0
-
-oSigner.TSAAddress = sTSAAddress
 
 Dim args
 Set args = WScript.Arguments
