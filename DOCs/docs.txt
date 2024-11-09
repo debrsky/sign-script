@@ -1,0 +1,10 @@
+https://www.strozhevsky.com/free_docs/CAdES.pdf
+
+Проверка создания электронной подписи CAdES-T
+https://www.cryptopro.ru/sites/default/files/products/cades/demopage/cades_t_sample.html
+
+
+Проверка создания электронной подписи CAdES-BES
+https://cryptopro.ru/sites/default/files/products/cades/demopage/cades_bes_sample.html
+
+

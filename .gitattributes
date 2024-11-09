@@ -1,0 +1,5 @@
+* text=auto
+*.txt text
+*.vbs text
+*.bin binary
+*.sig binary
