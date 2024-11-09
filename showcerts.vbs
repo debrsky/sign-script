@@ -1,8 +1,12 @@
 Option Explicit
+
+WScript.Echo "Старт..."
+
 Const CAPICOM_CURRENT_USER_STORE = 2
 Const CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN = 1
 Const CADESCOM_CADES_BES = 1
 Const CADESCOM_BASE64_TO_BINARY = 1
+Const CADESCOM_STRING_TO_UCS2LE = 0
 
 Dim oSigner
 Set oSigner = CreateObject("CAdESCOM.CPSigner")
@@ -18,12 +22,29 @@ Dim oSignedData
 Dim oSettings
 Set oSignedData = CreateObject("CAdESCOM.CadesSignedData")
 
-oSignedData.Content = LoadFileToBase64("file.bin")
+' oSignedData.ContentEncoding = CADESCOM_BASE64_TO_BINARY
+' oSignedData.Content = LoadFileToBase64("file.bin")
+
+WScript.Echo "ПОДПИСЫВАЕМ ФАЙЛ"
+
+WScript.Echo "Загрузка файла для подписания..."
+Dim content
+content = LoadFileToBase64("file.bin")
+WScript.Echo "Файл загружен."
+
+oSignedData.ContentEncoding = CADESCOM_BASE64_TO_BINARY
+oSignedData.Content = content
+
+WScript.Echo "Подписываем файл..."
 
 Dim sSignedData
 
 ' sSignedData = oSignedData.SignCades(oSigner, CADESCOM_CADES_BES, false) ' присоединная
 sSignedData = oSignedData.SignCades(oSigner, CADESCOM_CADES_BES, true) ' отсоединенная
+
+WScript.Echo "Файл подписан."
+
+WScript.Echo "Сохраняем подпись..."
 
 ' Сохранение signed data в файл с расширением .sig
 Dim fso, file
@@ -32,7 +53,27 @@ Set file = fso.CreateTextFile("file.bin.sig", True) ' "True" для перезаписи, есл
 file.Write sSignedData
 file.Close
 
-WScript.Echo 'Готово.';
+WScript.Echo "Подпись сохранена."
+
+WScript.Echo "ПРОВЕРКА ПОДПИСИ"
+
+WScript.Echo "Загружаем файл и подпись..."
+
+Dim fileContent : fileContent = LoadFileToBase64("file.bin")
+Dim fileSig : fileSig = LoadFile("file.bin.sig")
+oSignedData.ContentEncoding = CADESCOM_BASE64_TO_BINARY
+oSignedData.Content = fileContent
+
+WScript.Echo "Файл и подпись загружены."
+
+WScript.Echo "Проверяем подпись..."
+
+' Проверка отделенной подписи
+oSignedData.VerifyCades fileSig, CADESCOM_CADES_BES, True
+
+WScript.Echo "Подпись действительна."
+
+WScript.Echo 'Финиш.';
 
 Function GetSignerCertificate(SerialNumber)
 Set GetSignerCertificate = Nothing
@@ -48,7 +89,19 @@ For Each oCert In oStore.Certificates
 Next
 End Function
 
-' written by anthropic/claude-3.5-sonnet
+Function LoadFile (FileName)
+	Const ForReading = 1
+	Dim fso
+	Set fso = CreateObject("Scripting.FileSystemObject")
+	If Not fso.FileExists(FileName) Then
+		Err.Raise vbObjectError+1, "LoadFile", "File not found"
+	End If 
+	Dim ts
+	Set ts = fso.OpenTextFile(FileName, ForReading)  
+	LoadFile = ts.ReadAll
+End Function
+
+' anthropic/claude-3.5-sonnet
 Function LoadFileToBase64(filePath)
     Dim fso, file, stream, contents, base64Chars
     Dim result, buffer, binStr, sixBits
