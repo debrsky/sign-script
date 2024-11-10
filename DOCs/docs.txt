@@ -19,3 +19,6 @@ https://www.cryptopro.ru/sites/default/files/products/cades/demopage/verify.html
 
 ЭЦП в браузере – попробуйте прямо сейчас!
 https://cpdn.cryptopro.ru/default.php?url=/content/cades/plugin.html
+
+Приложение командной строки для подписи и шифрования файлов
+https://www.cryptopro.ru/sites/default/files/products/cryptcp/3-40/cryptcp.pdf
