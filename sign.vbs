@@ -19,7 +19,7 @@ If Err.Number <> 0 Then
     WScript.Echo
     WScript.Echo "Перед работой со скриптом необходимо настроить серийный номер сертификата в файле sign.vbs."
     WScript.Echo
-    WScript.Echo "Список всех сертификатов:"
+    WScript.Echo "Список установленных сертификатов:"
     WScript.Echo
     ListAllCertificates
     WScript.Quit 1
@@ -38,7 +38,15 @@ Dim args
 Set args = WScript.Arguments
 
 If args.Count = 0 Then
+    WScript.Echo 
+    WScript.Echo 
     WScript.Echo "Перетащите файлы на пакетный файл для подписи."
+    WScript.Echo 
+    WScript.Echo 
+    WScript.Echo "-----------------------------------"
+    WScript.Echo "Список установленных сертификатов:"
+    WScript.Echo "-----------------------------------"
+    ListAllCertificates
     WScript.Quit
 End If
 
