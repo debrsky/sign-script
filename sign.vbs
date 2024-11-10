@@ -26,6 +26,14 @@ If Err.Number <> 0 Then
 End If
 On Error Goto 0
 
+' Вывод информации о сертификате
+WScript.Echo "Сертификат, которым будут подписаны документы:"
+WScript.Echo "-----------------------------------"
+WScript.Echo "Владелец: " & oSigner.Certificate.SubjectName
+WScript.Echo "Серийный номер: " & oSigner.Certificate.SerialNumber
+WScript.Echo "Срок действия: с " & oSigner.Certificate.ValidFromDate & " по " & oSigner.Certificate.ValidToDate
+WScript.Echo "-----------------------------------"
+
 Dim args
 Set args = WScript.Arguments
 
