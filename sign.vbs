@@ -1,6 +1,6 @@
 Option Explicit
 
-const SERIAL_NUMBER = "7C00176E4CF1A304C0CF542651000A00176E4C"
+const SERIAL_NUMBER = "01234567890ABCDEF"
 
 Const CAPICOM_CURRENT_USER_STORE = 2
 Const CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN = 1
@@ -16,6 +16,12 @@ On Error Resume Next
 oSigner.Certificate = GetSignerCertificate(SERIAL_NUMBER)
 If Err.Number <> 0 Then
     WScript.Echo "ОШИБКА при получении сертификата: " & Err.Description & " (0x" & Hex(Err.Number) & ")"
+    WScript.Echo
+    WScript.Echo "Перед работой со скриптом необходимо настроить серийный номер сертификата в файле sign.vbs."
+    WScript.Echo
+    WScript.Echo "Список всех сертификатов:"
+    WScript.Echo
+    ListAllCertificates
     WScript.Quit 1
 End If
 On Error Goto 0
@@ -193,3 +199,17 @@ Function LoadFileToBase64(filePath)
     
     On Error Goto 0
 End Function
+
+Sub ListAllCertificates()
+    Dim oStore, oCert
+    Set oStore = CreateObject("CAdESCOM.Store")
+    oStore.Open CAPICOM_CURRENT_USER_STORE
+
+    WScript.Echo "-----------------------------------"
+    For Each oCert In oStore.Certificates
+        WScript.Echo "Владелец: " & oCert.SubjectName
+        WScript.Echo "Серийный номер: " & oCert.SerialNumber
+        WScript.Echo "Срок действия: с " & oCert.ValidFromDate & " по " & oCert.ValidToDate
+        WScript.Echo "-----------------------------------"
+    Next
+End Sub
